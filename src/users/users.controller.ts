@@ -9,18 +9,18 @@ import {
   UseInterceptors,
   // ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from './user.dto';
 import { UsersService } from './users.service';
-import { SerializedInterceptor } from 'src/interceptors/serialize.interceptor';
+import { SerializeUserInterceptor } from 'src/interceptors/serialize.interceptor';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  @UseInterceptors(SerializedInterceptor)
+  // @UseInterceptors(new SerializedInterceptor(UserDto))
+  @SerializeUserInterceptor(UserDto)
   getAll() {
-    console.log('2. Running');
     return this.usersService.findAll();
   }
 
@@ -29,8 +29,9 @@ export class UsersController {
     return this.usersService.create(userData);
   }
 
-  // @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
+  // @UseInterceptors(new SerializedInterceptor(UserDto))
+  @SerializeUserInterceptor(UserDto)
   findUser(@Param('id') id: string) {
     return this.usersService.findOne(parseInt(id));
   }

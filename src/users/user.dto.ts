@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { IsEmail, IsString } from 'class-validator';
 
 export class CreateUserDto {
@@ -14,4 +15,12 @@ export class UpdateUserDto {
 
   @IsString()
   name: string;
+}
+
+export class UserDto {
+  @Expose()
+  id: string;
+
+  @Expose()
+  email: string;
 }
