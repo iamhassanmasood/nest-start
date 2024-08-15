@@ -1,6 +1,6 @@
 FROM node:16.20.2
 
-WORKDIR /usr/src/myapp
+WORKDIR /usr/src/nest-project
 
 COPY package*.json ./
 
