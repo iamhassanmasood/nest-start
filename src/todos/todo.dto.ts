@@ -10,3 +10,14 @@ export class CreateTodoDto {
   @IsString()
   status: string;
 }
+
+export class UpdateTodoDto {
+  @IsString()
+  task: string;
+
+  @IsString()
+  priority: string;
+
+  @IsString()
+  status: string;
+}

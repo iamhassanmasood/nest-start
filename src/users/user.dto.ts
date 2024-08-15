@@ -7,3 +7,11 @@ export class CreateUserDto {
   @IsString()
   name: string;
 }
+
+export class UpdateUserDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  name: string;
+}

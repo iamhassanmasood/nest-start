@@ -2,47 +2,40 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Param,
-  HttpException,
-  HttpStatus,
-  Query,
+  Delete,
 } from '@nestjs/common';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UsersService } from './users.service';
-/**
+
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(private usersService: UsersService) {}
+
+  @Get()
+  getAll() {
+    return this.usersService.findAll();
+  }
 
   @Post()
-  createUser(@Body() body: CreateUserDto) {
-    const user = this.userService.find(body.email);
-
-    if (user) {
-      throw new HttpException('User already exists', HttpStatus.CONFLICT);
-    }
-    return this.userService.create(body.email, body.name);
+  async createUser(@Body() userData: CreateUserDto) {
+    return this.usersService.create(userData);
   }
 
   @Get('/:id')
   findUser(@Param('id') id: string) {
-    return this.userService.findOne(parseInt(id));
+    return this.usersService.findOne(parseInt(id));
   }
 
-  @Get()
-  findAllUsersWithSameEmail(@Query('email') email: string) {
-    return this.userService.find(email);
+  @Patch('/:id')
+  updateUser(@Param('id') id: string, @Body() upatedUserData: UpdateUserDto) {
+    return this.usersService.update(parseInt(id), upatedUserData);
   }
-}
-*/
 
-@Controller("users")
-export class UsersController {
-  constructor(private usersService: UsersService) {}
-
-  @Post()
-  createUser(@Body() body: CreateUserDto) {
-    this.usersService.create(body.name, body.email);
+  @Delete('/:id')
+  deleteUser(@Param('id') id: string) {
+    return this.usersService.delete(parseInt(id));
   }
 }
