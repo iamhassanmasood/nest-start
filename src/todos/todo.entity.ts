@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { TodoStatus, TodoPriority } from './todo.dto';
 
 @Entity()
 export class Todo {
@@ -8,9 +9,13 @@ export class Todo {
   @Column()
   task: string;
 
-  @Column()
-  priority: string;
+  @Column({
+    type: 'text',
+  })
+  priority: TodoPriority;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'text',
+  })
+  status: TodoStatus;
 }
